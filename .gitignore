@@ -1,0 +1,22 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Program Files
+Makefile
+moc_*
+qrc_*
+ui_*
+tags
+xylchat
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
