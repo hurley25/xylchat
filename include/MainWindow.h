@@ -19,6 +19,9 @@
 
 #include <QMainWindow>
 
+class ChatWidget;
+class QLabel;
+
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
@@ -31,13 +34,10 @@ protected:
 
 private:
 	void createMainWeiget(); 	// 创建主窗口控件
-	void createActions(); 		// 创建动作
-	void createToolBars(); 		// 创建工具栏
 	void createStatusBar(); 	// 创建状态栏
 private:
 	ChatWidget *chatWidget; 	// 主窗口控件
 	QLabel *statusLabel; 		// 状态栏文本
-	QAction *aboutAction; 		// 关于本程序
 };
 
 #endif // MAIN_WINDOW_H_

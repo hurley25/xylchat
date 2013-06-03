@@ -20,11 +20,50 @@
 
 ChatWidget::ChatWidget()
 {
-
+	createWidget();
 }
 
 ChatWidget::~ChatWidget()
 {
 
+}
+
+void ChatWidget::createWidget()
+{
+	chatText = new QTextBrowser();
+	sendText = new QTextEdit();
+
+	fontListComboBox = new QComboBox();
+	fontSizeComboBox = new QComboBox();
+	fontBoldButton = new QPushButton();
+	fontInclineButton = new QPushButton();
+	fontColorButton = new QPushButton();
+	saveChatInfoButton = new QPushButton();
+	clearChatInfoButton = new QPushButton();
+	
+	toolHBoxLayout = new QHBoxLayout;
+	toolHBoxLayout->addWidget(fontListComboBox);
+	toolHBoxLayout->addWidget(fontSizeComboBox);
+	toolHBoxLayout->addWidget(fontBoldButton);
+	toolHBoxLayout->addWidget(fontColorButton);
+	toolHBoxLayout->addWidget(saveChatInfoButton);
+	toolHBoxLayout->addWidget(clearChatInfoButton);
+	toolHBoxLayout->addStretch();
+	
+	closeButton = new QPushButton(tr("关闭(&C)"));
+	sendButton = new QPushButton(tr("发送(&S)"));
+
+	buttonHBoxLayout = new QHBoxLayout();
+	buttonHBoxLayout->addStretch();
+	buttonHBoxLayout->addWidget(closeButton);
+	buttonHBoxLayout->addWidget(sendButton);
+
+	mainVBoxLayout = new QVBoxLayout();
+	mainVBoxLayout->addWidget(chatText);
+	mainVBoxLayout->addLayout(toolHBoxLayout);
+	mainVBoxLayout->addWidget(sendText);
+	mainVBoxLayout->addLayout(buttonHBoxLayout);
+
+	setLayout(mainVBoxLayout);
 }
 

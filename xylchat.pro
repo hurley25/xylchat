@@ -18,8 +18,8 @@ INCLUDEPATH += include
 QT += network
 
 # Input
-HEADERS += include/MainWindow.h
+HEADERS += include/MainWindow.h include/ChatWidget.h
 
-SOURCES += src/main.cpp src/MainWindow.cpp
+SOURCES += src/main.cpp src/MainWindow.cpp src/ChatWidget.cpp
 
 RESOURCES += resource.qrc
