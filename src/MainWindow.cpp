@@ -17,13 +17,46 @@
 #include <QtGui>
 
 #include "MainWindow.h"
+#include "ChatWidget.h"
 
 MainWindow::MainWindow()
 {
-
+	createMainWeiget();
+	createStatusBar();
 }
 
 MainWindow::~MainWindow()
 {
 
 }
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	int res = QMessageBox::question(NULL, this->windowTitle(),
+						tr("您真的要退出本程序吗？"),
+						QMessageBox::Yes | QMessageBox::No);
+	if (res == QMessageBox::Yes) {
+		event->accept();
+	} else{
+		event->ignore();
+	}
+}
+
+void MainWindow::createMainWeiget()
+{
+	chatWidget = new ChatWidget();
+	
+	setCentralWidget(chatWidget);
+	//setWindowIcon(QIcon(":/res/images/logo.png"));
+	setWindowTitle(tr("Xiyou Linux Group 交流工具 ——  仅内部使用"));
+}
+
+void MainWindow::createStatusBar()
+{
+	statusLabel = new QLabel(tr("Xiyou Linux Group"));
+	statusLabel->setAlignment(Qt::AlignHCenter);
+	statusLabel->setMinimumSize(statusLabel->sizeHint());
+
+	this->statusBar()->addWidget(statusLabel);
+}
+
