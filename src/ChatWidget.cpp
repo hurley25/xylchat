@@ -32,6 +32,7 @@ void ChatWidget::createWidget()
 {
 	chatText = new QTextBrowser();
 	sendText = new QTextEdit();
+    sendText->setMaximumHeight(sendText->sizeHint().height() >> 1);
 
 	fontListComboBox = new QComboBox();
 	fontSizeComboBox = new QComboBox();
@@ -50,10 +51,12 @@ void ChatWidget::createWidget()
 	toolHBoxLayout->addWidget(clearChatInfoButton);
 	toolHBoxLayout->addStretch();
 	
+    onlineLabel = new QLabel(tr("当前在线 1 人"));
 	closeButton = new QPushButton(tr("关闭(&C)"));
 	sendButton = new QPushButton(tr("发送(&S)"));
 
 	buttonHBoxLayout = new QHBoxLayout();
+    buttonHBoxLayout->addWidget(onlineLabel);
 	buttonHBoxLayout->addStretch();
 	buttonHBoxLayout->addWidget(closeButton);
 	buttonHBoxLayout->addWidget(sendButton);

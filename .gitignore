@@ -12,6 +12,7 @@ Makefile
 moc_*
 qrc_*
 ui_*
+*.user
 tags
 xylchat
 

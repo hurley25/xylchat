@@ -28,6 +28,7 @@ class QListView;
 class QPushButton;
 class QComboBox;
 class QPushButton;
+class QLabel;
 
 class ChatWidget : public QWidget
 {
@@ -46,6 +47,7 @@ private:
 	QTextBrowser *chatText;
 	QTextEdit    *sendText;
 
+    QLabel       *onlineLabel;
 	QPushButton  *closeButton;
 	QPushButton  *sendButton;
 

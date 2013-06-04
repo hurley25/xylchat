@@ -18,11 +18,11 @@
 
 #include "MainWindow.h"
 #include "ChatWidget.h"
+#include "OnlineList.h"
 
 MainWindow::MainWindow()
 {
 	createMainWeiget();
-	createStatusBar();
 }
 
 MainWindow::~MainWindow()
@@ -45,18 +45,20 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::createMainWeiget()
 {
 	chatWidget = new ChatWidget();
+    onlineList = new OnlineList();
+
+    listLayout = new QVBoxLayout();
+    listLayout->addWidget(onlineList);
+
+    QWidget *listWidget = new QWidget();
+    listWidget->setLayout(listLayout);
+
+    mainSplitter = new QSplitter(Qt::Horizontal);
+    mainSplitter->addWidget(chatWidget);
+    mainSplitter->addWidget(listWidget);
 	
-	setCentralWidget(chatWidget);
+    setCentralWidget(mainSplitter);
 	//setWindowIcon(QIcon(":/res/images/logo.png"));
+    resize(800, 550);
 	setWindowTitle(tr("Xiyou Linux Group 交流工具 ——  仅内部使用"));
 }
-
-void MainWindow::createStatusBar()
-{
-	statusLabel = new QLabel(tr("Xiyou Linux Group"));
-	statusLabel->setAlignment(Qt::AlignHCenter);
-	statusLabel->setMinimumSize(statusLabel->sizeHint());
-
-	this->statusBar()->addWidget(statusLabel);
-}
-
