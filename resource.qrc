@@ -1,5 +1,12 @@
 <RCC>
-    <qresource>
+    <qresource prefix="/">
+        <file>res/images/logo.png</file>
+        <file>res/images/bin_empty.png</file>
+        <file>res/images/save.png</file>
+        <file>res/images/textbold.png</file>
+        <file>res/images/textcolor.png</file>
         <file>res/language/qt_zh_CN.qm</file>
+        <file>res/images/textitalic.png</file>
+        <file>res/images/fonts.png</file>
     </qresource>
 </RCC>

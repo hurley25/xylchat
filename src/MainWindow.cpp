@@ -44,8 +44,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::createMainWeiget()
 {
-	chatWidget = new ChatWidget();
     onlineList = new OnlineList();
+    chatWidget = new ChatWidget(onlineList);
 
     listLayout = new QVBoxLayout();
     listLayout->addWidget(onlineList);
@@ -58,7 +58,7 @@ void MainWindow::createMainWeiget()
     mainSplitter->addWidget(listWidget);
 	
     setCentralWidget(mainSplitter);
-	//setWindowIcon(QIcon(":/res/images/logo.png"));
+    setWindowIcon(QIcon(":/res/images/logo.png"));
     resize(800, 550);
 	setWindowTitle(tr("Xiyou Linux Group 交流工具 ——  仅内部使用"));
 }

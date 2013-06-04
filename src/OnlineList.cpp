@@ -15,14 +15,13 @@
 // =====================================================================================
 
 #include <QtGui>
+#include <QtNetwork>
 
 #include "OnlineList.h"
 
 OnlineList::OnlineList()
 {
     createViewTitle();
-    insertUserInfo("hurley", "fedora", "127.0.0.1");
-    insertUserInfo("hurley", "fedora", "127.0.0.1");
     insertUserInfo("hurley", "fedora", "127.0.0.1");
 }
 
@@ -57,8 +56,18 @@ void OnlineList::createViewTitle()
 
 void OnlineList::insertUserInfo(QString nickname, QString hostname, QString ipaddr)
 {
-    insertRow(0);
-    setItem(0, 0, new QTableWidgetItem(nickname));
-    setItem(0, 1, new QTableWidgetItem(hostname));
-    setItem(0, 2, new QTableWidgetItem(ipaddr));
+    bool isAdded = findItems(QHostInfo::localHostName(), Qt::MatchExactly).isEmpty();
+    if (isAdded) {
+        insertRow(0);
+        setItem(0, 0, new QTableWidgetItem(nickname));
+        setItem(0, 1, new QTableWidgetItem(hostname));
+        setItem(0, 2, new QTableWidgetItem(ipaddr));
+    }
 }
+
+void OnlineList::removeUserInfo(QString userName, QString localHostName)
+{
+    int rowNum = findItems(localHostName,Qt::MatchExactly).first()->row();
+    removeRow(rowNum);
+}
+
