@@ -63,5 +63,5 @@ void MainWindow::createMainWeiget()
     setCentralWidget(mainSplitter);
     setWindowIcon(QIcon(":/res/images/logo.png"));
     resize(800, 550);
-	setWindowTitle(tr("Xiyou Linux Group 交流工具 ——  仅内部使用"));
+    setWindowTitle(tr("Xiyou Linux Group 交流工具"));
 }

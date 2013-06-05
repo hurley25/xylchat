@@ -40,7 +40,8 @@ ChatWidget::~ChatWidget()
 void ChatWidget::createWidget()
 {
 	chatText = new QTextBrowser();
-	sendText = new QTextEdit();
+    sendText = new QTextEdit();
+    sendText->installEventFilter(this);
     sendText->setMaximumHeight(sendText->sizeHint().height() >> 1);
 
     fontSizeButton = new QPushButton(QIcon(":/res/images/fonts.png"), tr(""));
@@ -234,7 +235,7 @@ bool ChatWidget::eventFilter(QObject *target, QEvent *event)
     if (target == sendText) {
         if (event->type() == QEvent::KeyPress) {
             QKeyEvent *k = static_cast<QKeyEvent *>(event);
-            if (k->key() == Qt::Key_Return)
+            if (k->key() == Qt::Key_Enter)
             {
                 sendSlot();
                 return true;
