@@ -65,7 +65,7 @@ void ChatWidget::createWidget()
 	toolHBoxLayout->addWidget(clearChatInfoButton);
 	toolHBoxLayout->addStretch();
 	
-    onlineLabel = new QLabel(tr("当前在线 1 人"));
+    onlineLabel = new QLabel(tr("当前在线 0 人"));
 	sendButton = new QPushButton(tr("发送(&S)"));
     connect(sendButton, SIGNAL(clicked()), this, SLOT(sendSlot()));
 
@@ -116,8 +116,6 @@ void ChatWidget::sendMessage(MessageType type)
         case UserLogin:
         case Userleft:
         break;
-        default:
-            return;
     }
     /*
      * QHostAddress::Broadcast	1
@@ -142,15 +140,13 @@ void ChatWidget::recvMessage()
         switch (messageType) {
             case Message:
                 recvData >> message;
-                addUserChatInfoOnce(username, ipAddr, message);
+                addUserChatInfoOnce(username, message);
             break;
             case UserLogin:
                 disUserLogin(username, hostname, ipAddr);
             break;
             case Userleft:
                 disUserLeft(username, hostname, ipAddr);
-            break;
-            default:
             break;
         }
     }
@@ -200,13 +196,13 @@ QString ChatWidget::getMessage()
     return msg;
 }
 
-void ChatWidget::addUserChatInfoOnce(QString username, QString ipAddr, QString message)
+void ChatWidget::addUserChatInfoOnce(QString username, QString message)
 {
     QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
     chatText->setTextColor(Qt::blue);
     chatText->setCurrentFont(QFont("Times New Roman", 12));
-    chatText->append(username+" [" + ipAddr + "] "+ time);
+    chatText->append(username + time);
     chatText->append(message);
 }
 
@@ -235,7 +231,7 @@ void ChatWidget::closeEvent(QCloseEvent *)
 
 bool ChatWidget::eventFilter(QObject *target, QEvent *event)
 {
-    if (target == chatText) {
+    if (target == sendText) {
         if (event->type() == QEvent::KeyPress) {
             QKeyEvent *k = static_cast<QKeyEvent *>(event);
             if (k->key() == Qt::Key_Return)

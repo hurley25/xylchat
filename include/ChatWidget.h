@@ -75,7 +75,7 @@ private:
     QString getMessage();
 
     // 聊天框添加一条聊天信息
-    void addUserChatInfoOnce(QString username, QString ipAddr, QString message);
+    void addUserChatInfoOnce(QString username, QString message);
 
     // 处理用户上线
     void disUserLogin(QString username, QString hostname, QString ipAddr);

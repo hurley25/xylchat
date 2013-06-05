@@ -36,12 +36,12 @@ int main(int argc, char *argv[])
 	app.installTranslator(&translator);
 	
 	MainWindow *mainwindow = new MainWindow();
-
-	mainwindow->show();
 	
 	// 窗口显示在屏幕正中间
 	mainwindow->move((QApplication::desktop()->width() - mainwindow->width()) >> 1,
 				(QApplication::desktop()->height() - mainwindow->height()) >> 1);
+
+    mainwindow->show();
 
 	return app.exec();
 }

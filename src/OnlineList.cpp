@@ -22,7 +22,6 @@
 OnlineList::OnlineList()
 {
     createViewTitle();
-    insertUserInfo("hurley", "fedora", "127.0.0.1");
 }
 
 OnlineList::~OnlineList()

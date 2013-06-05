@@ -32,14 +32,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-	int res = QMessageBox::question(NULL, this->windowTitle(),
+    /*
+    int res = QMessageBox::question(NULL, this->windowTitle(),
 						tr("您真的要退出本程序吗？"),
 						QMessageBox::Yes | QMessageBox::No);
-	if (res == QMessageBox::Yes) {
+    if (res == QMessageBox::Yes) {
 		event->accept();
 	} else{
 		event->ignore();
-	}
+    }
+    */
+    event->accept();
 }
 
 void MainWindow::createMainWeiget()
