@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 	mainwindow->move((QApplication::desktop()->width() - mainwindow->width()) >> 1,
 				(QApplication::desktop()->height() - mainwindow->height()) >> 1);
 
-    mainwindow->show();
+	mainwindow->show();
 
 	return app.exec();
 }

@@ -32,36 +32,36 @@ MainWindow::~MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    /*
-    int res = QMessageBox::question(NULL, this->windowTitle(),
-						tr("您真的要退出本程序吗？"),
-						QMessageBox::Yes | QMessageBox::No);
-    if (res == QMessageBox::Yes) {
-		event->accept();
-	} else{
-		event->ignore();
-    }
-    */
-    event->accept();
+	/*
+	   int res = QMessageBox::question(NULL, this->windowTitle(),
+	   tr("您真的要退出本程序吗？"),
+	   QMessageBox::Yes | QMessageBox::No);
+	   if (res == QMessageBox::Yes) {
+	   event->accept();
+	   } else{
+	   event->ignore();
+	   }
+	   */
+	event->accept();
 }
 
 void MainWindow::createMainWeiget()
 {
-    onlineList = new OnlineList();
-    chatWidget = new ChatWidget(onlineList);
+	onlineList = new OnlineList();
+	chatWidget = new ChatWidget(onlineList);
 
-    listLayout = new QVBoxLayout();
-    listLayout->addWidget(onlineList);
+	listLayout = new QVBoxLayout();
+	listLayout->addWidget(onlineList);
 
-    QWidget *listWidget = new QWidget();
-    listWidget->setLayout(listLayout);
+	QWidget *listWidget = new QWidget();
+	listWidget->setLayout(listLayout);
 
-    mainSplitter = new QSplitter(Qt::Horizontal);
-    mainSplitter->addWidget(chatWidget);
-    mainSplitter->addWidget(listWidget);
-	
-    setCentralWidget(mainSplitter);
-    setWindowIcon(QIcon(":/res/images/logo.png"));
-    resize(800, 550);
-    setWindowTitle(tr("Xiyou Linux Group 交流工具"));
+	mainSplitter = new QSplitter(Qt::Horizontal);
+	mainSplitter->addWidget(chatWidget);
+	mainSplitter->addWidget(listWidget);
+
+	setCentralWidget(mainSplitter);
+	setWindowIcon(QIcon(":/res/images/logo.png"));
+	resize(800, 550);
+	setWindowTitle(tr("Xiyou Linux Group 交流工具"));
 }
