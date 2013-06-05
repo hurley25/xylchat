@@ -26,9 +26,9 @@ public:
 	OnlineList();
 	~OnlineList();
 
-    void createViewTitle();
-    void insertUserInfo(QString nickname, QString hostname, QString ipaddr);
-    void removeUserInfo(QString hostname);
+	void createViewTitle();
+	void insertUserInfo(QString nickname, QString hostname, QString ipaddr);
+	void removeUserInfo(QString hostname);
 };
 
 #endif // ONLINELIST_H_
