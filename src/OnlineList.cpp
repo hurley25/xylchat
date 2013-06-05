@@ -65,9 +65,9 @@ void OnlineList::insertUserInfo(QString nickname, QString hostname, QString ipad
     }
 }
 
-void OnlineList::removeUserInfo(QString userName, QString localHostName)
+void OnlineList::removeUserInfo(QString hostname)
 {
-    int rowNum = findItems(localHostName,Qt::MatchExactly).first()->row();
+    int rowNum = findItems(hostname, Qt::MatchExactly).first()->row();
     removeRow(rowNum);
 }
 
