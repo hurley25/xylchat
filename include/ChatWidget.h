@@ -55,7 +55,9 @@ private slots:
 	void fontSize();
 	void fontBold();
 	void fontItalic();
+	void fontUnderline();
 	void fontColor();
+	void insertImage();
 	void saveChatInfo();
 	void clearChatInfo();
 	void sendSlot();
@@ -100,7 +102,9 @@ private:
 	QPushButton  *fontSizeButton;
 	QPushButton  *fontBoldButton;
 	QPushButton  *fontItalicButton;
+	QPushButton  *fontUnderlineButton;
 	QPushButton  *fontColorButton;
+	QPushButton  *insertImageButton;
 	QPushButton  *saveChatInfoButton;
 	QPushButton  *clearChatInfoButton;
 };

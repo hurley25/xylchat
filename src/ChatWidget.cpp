@@ -54,8 +54,12 @@ void ChatWidget::createWidget()
 	connect(fontBoldButton, SIGNAL(clicked()), this, SLOT(fontBold()));
 	fontItalicButton = new QPushButton(QIcon(":/res/images/textitalic.png"), tr(""));
 	connect(fontItalicButton, SIGNAL(clicked()), this, SLOT(fontItalic()));
+	fontUnderlineButton = new QPushButton(QIcon(":/res/images/textunderline.png"), tr(""));
+	connect(fontUnderlineButton, SIGNAL(clicked()), this, SLOT(fontUnderline()));
 	fontColorButton = new QPushButton(QIcon(":/res/images/textcolor.png"), tr(""));;
 	connect(fontColorButton, SIGNAL(clicked()), this, SLOT(fontColor()));
+	insertImageButton= new QPushButton(QIcon(":/res/images/insertimage.png"), tr(""));
+	connect(insertImageButton, SIGNAL(clicked()), this, SLOT(insertImage()));
 	saveChatInfoButton = new QPushButton(QIcon(":/res/images/save.png"), tr(""));
 	connect(saveChatInfoButton, SIGNAL(clicked()), this, SLOT(saveChatInfo()));
 	clearChatInfoButton = new QPushButton(QIcon(":/res/images/bin_empty.png"), tr(""));
@@ -65,7 +69,9 @@ void ChatWidget::createWidget()
 	toolHBoxLayout->addWidget(fontSizeButton);
 	toolHBoxLayout->addWidget(fontBoldButton);
 	toolHBoxLayout->addWidget(fontItalicButton);
+	toolHBoxLayout->addWidget(fontUnderlineButton);
 	toolHBoxLayout->addWidget(fontColorButton);
+	toolHBoxLayout->addWidget(insertImageButton);
 	toolHBoxLayout->addWidget(saveChatInfoButton);
 	toolHBoxLayout->addWidget(clearChatInfoButton);
 	toolHBoxLayout->addStretch();
@@ -208,6 +214,7 @@ void ChatWidget::addUserChatInfoOnce(QString username, QString message)
 	chatText->setCurrentFont(QFont("Times New Roman", 12));
 	chatText->append(username + " " + time);
 	chatText->append(message);
+	chatText->verticalScrollBar()->setValue(chatText->verticalScrollBar()->maximum());
 }
 
 void ChatWidget::disUserLogin(QString username, QString hostname, QString ipAddr)
@@ -249,26 +256,86 @@ bool ChatWidget::eventFilter(QObject *target, QEvent *event)
 
 void ChatWidget::fontSize()
 {
-
+	bool isGet;
+	QFont font = QFontDialog::getFont(&isGet, QFont("Times", 12), this);
+	
+	if (isGet) {
+		sendText->setCurrentFont(font);
+	}
 }
 
 void ChatWidget::fontBold()
 {
+	static bool isBold = false;
 
+	if (isBold) {
+		sendText->setFontWeight(QFont::Normal);
+		sendText->setFocus();
+		isBold = false;
+	} else {
+		sendText->setFontWeight(QFont::Bold);
+		sendText->setFocus();
+		isBold = true;
+	}
 }
 
 void ChatWidget::fontItalic()
 {
+	static bool isItali = false;
 
+	if (isItali) {
+		sendText->setFontItalic(false);
+		sendText->setFocus();
+		isItali = false;
+	} else {
+		sendText->setFontItalic(true);
+		sendText->setFocus();
+		isItali = true;
+	}
 }
+
+void ChatWidget::fontUnderline()
+{
+	static bool isUnderline = false;
+
+	if (isUnderline) {
+		sendText->setFontUnderline(false);
+		sendText->setFocus();
+		isUnderline = false;
+	} else {
+		sendText->setFontUnderline(true);
+		sendText->setFocus();
+		isUnderline = true;
+	}
+}
+
 
 void ChatWidget::fontColor()
 {
-	QColor color = QColorDialog::getColor();
+	static QColor oldColor;
+
+	QColor color = QColorDialog::getColor(oldColor, this);
 	if (color.isValid()) {
-		chatText->setTextColor(color);
+		sendText->setTextColor(color);
+		oldColor = color;
 		sendText->setFocus();
 	}
+}
+
+void ChatWidget::insertImage()
+{
+	QString file = QFileDialog::getOpenFileName(this, tr("Open File"), "pic/", tr("Images (*.png *.jpg)"));
+	QUrl fileUrl(QString("file://%1").arg(file));
+	QImage image = QImageReader(file).read();
+	QTextDocument * textDocument = sendText->document();
+	textDocument->addResource(QTextDocument::ImageResource,fileUrl, QVariant(image));
+	QTextCursor cursor = sendText->textCursor();
+	QTextImageFormat imageFormat;
+
+	imageFormat.setWidth(image.width());
+	imageFormat.setHeight(image.height());
+	imageFormat.setName(fileUrl.toString());
+	cursor.insertImage(imageFormat);
 }
 
 void ChatWidget::saveChatInfo()
