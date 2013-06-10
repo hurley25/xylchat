@@ -34,6 +34,7 @@ ChatWidget::ChatWidget(OnlineList *onlineList)
 
 ChatWidget::~ChatWidget()
 {
+	sendMessage(Userleft);	
 	delete sockServer;
 }
 
@@ -44,7 +45,6 @@ void ChatWidget::createWidget()
 
 	sendText = new QTextEdit();
 	sendText->setFocusPolicy(Qt::StrongFocus);
-	sendText->setFocus();
 	sendText->installEventFilter(this);
 	sendText->setMaximumHeight(sendText->sizeHint().height() >> 1);
 
@@ -88,7 +88,8 @@ void ChatWidget::createWidget()
 	mainVBoxLayout->addLayout(toolHBoxLayout);
 	mainVBoxLayout->addWidget(sendText);
 	mainVBoxLayout->addLayout(buttonHBoxLayout);
-
+	
+	sendText->setFocus();
 	setLayout(mainVBoxLayout);
 }
 
@@ -136,6 +137,7 @@ void ChatWidget::sendMessage(MessageType type)
 
 void ChatWidget::recvMessage()
 {
+	// 循环读取，读完为止	
 	while (sockServer->hasPendingDatagrams()) {
 		QByteArray datagram;
 		datagram.resize(sockServer->pendingDatagramSize());
@@ -262,6 +264,7 @@ void ChatWidget::fontSize()
 	if (isGet) {
 		sendText->setCurrentFont(font);
 	}
+	sendText->setFocus();
 }
 
 void ChatWidget::fontBold()
@@ -270,13 +273,12 @@ void ChatWidget::fontBold()
 
 	if (isBold) {
 		sendText->setFontWeight(QFont::Normal);
-		sendText->setFocus();
 		isBold = false;
 	} else {
 		sendText->setFontWeight(QFont::Bold);
-		sendText->setFocus();
 		isBold = true;
 	}
+	sendText->setFocus();
 }
 
 void ChatWidget::fontItalic()
@@ -285,13 +287,12 @@ void ChatWidget::fontItalic()
 
 	if (isItali) {
 		sendText->setFontItalic(false);
-		sendText->setFocus();
 		isItali = false;
 	} else {
 		sendText->setFontItalic(true);
-		sendText->setFocus();
 		isItali = true;
 	}
+	sendText->setFocus();
 }
 
 void ChatWidget::fontUnderline()
@@ -300,13 +301,12 @@ void ChatWidget::fontUnderline()
 
 	if (isUnderline) {
 		sendText->setFontUnderline(false);
-		sendText->setFocus();
 		isUnderline = false;
 	} else {
 		sendText->setFontUnderline(true);
-		sendText->setFocus();
 		isUnderline = true;
 	}
+	sendText->setFocus();
 }
 
 
@@ -318,8 +318,8 @@ void ChatWidget::fontColor()
 	if (color.isValid()) {
 		sendText->setTextColor(color);
 		oldColor = color;
-		sendText->setFocus();
 	}
+	sendText->setFocus();
 }
 
 void ChatWidget::insertImage()
@@ -336,6 +336,7 @@ void ChatWidget::insertImage()
 	imageFormat.setHeight(image.height());
 	imageFormat.setName(fileUrl.toString());
 	cursor.insertImage(imageFormat);
+	sendText->setFocus();
 }
 
 void ChatWidget::saveChatInfo()
