@@ -51,7 +51,7 @@ protected:
 	void closeEvent(QCloseEvent *);
 	bool eventFilter(QObject *target, QEvent *event);
 
-private slots:
+public slots:
 	void fontSize();
 	void fontBold();
 	void fontItalic();

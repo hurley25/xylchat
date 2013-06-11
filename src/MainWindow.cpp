@@ -42,6 +42,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 	   event->ignore();
 	   }
 	   */
+	chatWidget->sendMessage(Userleft);
 	event->accept();
 }
 

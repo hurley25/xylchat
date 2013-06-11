@@ -33,8 +33,7 @@ ChatWidget::ChatWidget(OnlineList *onlineList)
 }
 
 ChatWidget::~ChatWidget()
-{
-	sendMessage(Userleft);	
+{	
 	delete sockServer;
 }
 
