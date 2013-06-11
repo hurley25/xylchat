@@ -31,9 +31,11 @@ class OnlineList;
 
 // 用户消息类型的枚举变量
 enum MessageType {
-	Message   = 0,
-	UserLogin = 1,
-	Userleft  = 2
+	Message      = 0,
+	UserLogin    = 1,
+	Userleft     = 2,
+	AskWhoOnline = 3,
+	IamOnline    = 4
 };
 
 class ChatWidget : public QWidget
@@ -63,7 +65,7 @@ public slots:
 	void sendSlot();
 
 	// 发送数据包
-	void sendMessage(MessageType type);
+	void sendMessage(MessageType type, QString ipAddr = "");
 	// 接收处理数据包
 	void recvMessage();
 

@@ -110,7 +110,7 @@ void ChatWidget::createNetLink()
 	sendMessage(UserLogin);
 }
 
-void ChatWidget::sendMessage(MessageType type)
+void ChatWidget::sendMessage(MessageType type, QString ipAddr)
 {
 	QByteArray data;
 	QDataStream sendData(&data, QIODevice::WriteOnly);
@@ -122,8 +122,12 @@ void ChatWidget::sendMessage(MessageType type)
 		case Message:
 			sendData << getMessage();
 			break;
+		case IamOnline:
+			sockServer->writeDatagram(data, data.length(), QHostAddress(ipAddr), listen_port);
+			return;
 		case UserLogin:
 		case Userleft:
+		case AskWhoOnline:
 			// do nothing
 			break;
 	}
@@ -154,10 +158,14 @@ void ChatWidget::recvMessage()
 				addUserChatInfoOnce(username, message);
 				break;
 			case UserLogin:
+			case IamOnline:
 				disUserLogin(username, hostname, ipAddr);
 				break;
 			case Userleft:
 				disUserLeft(username, hostname, ipAddr);
+				break;
+			case AskWhoOnline:
+				sendMessage(IamOnline, ipAddr);
 				break;
 		}
 	}
@@ -169,7 +177,8 @@ QString ChatWidget::getIP()
 
 	foreach (QHostAddress address, list) {
 		// 只获取 IPv4 协议地址
-		if (address.protocol() == QAbstractSocket::IPv4Protocol) {
+		if (address.protocol() == QAbstractSocket::IPv4Protocol 
+			&& address.toString() != "127.0.0.1") {
 			return address.toString();
 		}
 	}
