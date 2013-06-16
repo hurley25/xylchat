@@ -245,7 +245,7 @@ void ChatWidget::disUserLeft(QString username, QString hostname, QString ipAddr)
 
 void ChatWidget::closeEvent(QCloseEvent *)
 {
-	sendMessage(Userleft);
+	//sendMessage(Userleft);
 }
 
 bool ChatWidget::eventFilter(QObject *target, QEvent *event)
