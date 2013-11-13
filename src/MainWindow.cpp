@@ -30,22 +30,6 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-	/*
-	   int res = QMessageBox::question(NULL, this->windowTitle(),
-	   tr("您真的要退出本程序吗？"),
-	   QMessageBox::Yes | QMessageBox::No);
-	   if (res == QMessageBox::Yes) {
-	   event->accept();
-	   } else{
-	   event->ignore();
-	   }
-	   */
-	chatWidget->sendMessage(Userleft);
-	event->accept();
-}
-
 void MainWindow::createMainWeiget()
 {
 	onlineList = new OnlineList();
@@ -64,5 +48,21 @@ void MainWindow::createMainWeiget()
 	setCentralWidget(mainSplitter);
 	setWindowIcon(QIcon(":/res/images/logo.png"));
 	resize(800, 550);
-	setWindowTitle(tr("Xiyou Linux Group 交流工具"));
+	setWindowTitle(tr("xylchat"));
 }
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+	
+	int res = QMessageBox::question(NULL, this->windowTitle(),
+		tr("您真的要退出本程序吗？"), QMessageBox::Yes | QMessageBox::No);
+	if (res == QMessageBox::Yes) {
+		event->accept();
+	} else{
+		event->ignore();
+	}
+
+	chatWidget->sendMessage(Userleft);
+	event->accept();
+}
+

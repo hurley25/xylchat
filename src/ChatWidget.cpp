@@ -95,16 +95,8 @@ void ChatWidget::createWidget()
 void ChatWidget::createNetLink()
 {
 	sockServer = new QUdpSocket();
-	// 监听本机上的 UDP 9527 端口。如果有消息到来，套接字就会发送readyRead()信号
 	listen_port = 9527;
-	/*
-	 * QUdpSocket::ShareAddress
-	 * Allow other services to bind to the same address and port.
-	 *
-	 * QUdpSocket::ReuseAddressHint
-	 * Provides a hint to QUdpSocket that it should try to rebind the service
-	 * even if the address and port are already bound by another socket.
-	 */
+
 	sockServer->bind(listen_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
 	connect(sockServer, SIGNAL(readyRead()), this, SLOT(recvMessage()));
 	sendMessage(UserLogin);
@@ -125,10 +117,10 @@ void ChatWidget::sendMessage(MessageType type, QString ipAddr)
 		case IamOnline:
 			sockServer->writeDatagram(data, data.length(), QHostAddress(ipAddr), listen_port);
 			return;
+		// do nothing
 		case UserLogin:
 		case Userleft:
 		case AskWhoOnline:
-			// do nothing
 			break;
 	}
 	/*
@@ -189,8 +181,7 @@ QString ChatWidget::getIP()
 QString ChatWidget::getUserName()
 {
 	QStringList envVariables;
-	envVariables << "USERNAME.*" << "USER.*" << "USERDOMAIN.*"
-		<< "HOSTNAME.*" << "DOMAINNAME.*";
+	envVariables << "USERNAME.*" << "USER.*" << "USERDOMAIN.*" << "HOSTNAME.*" << "DOMAINNAME.*";
 	QStringList environment = QProcess::systemEnvironment();
 
 	foreach (QString string, envVariables) {
@@ -245,7 +236,7 @@ void ChatWidget::disUserLeft(QString username, QString hostname, QString ipAddr)
 
 void ChatWidget::closeEvent(QCloseEvent *)
 {
-	//sendMessage(Userleft);
+	sendMessage(Userleft);
 }
 
 bool ChatWidget::eventFilter(QObject *target, QEvent *event)
@@ -253,8 +244,7 @@ bool ChatWidget::eventFilter(QObject *target, QEvent *event)
 	if (target == sendText) {
 		if (event->type() == QEvent::KeyPress) {
 			QKeyEvent *k = static_cast<QKeyEvent *>(event);
-			if (k->key() == Qt::Key_Return || k->key() == Qt::Key_Enter)
-			{
+			if (k->key() == Qt::Key_Return || k->key() == Qt::Key_Enter) {
 				sendSlot();
 				return true;
 			}
@@ -272,6 +262,7 @@ void ChatWidget::fontSize()
 	if (isGet) {
 		sendText->setCurrentFont(font);
 	}
+
 	sendText->setFocus();
 }
 
@@ -286,6 +277,7 @@ void ChatWidget::fontBold()
 		sendText->setFontWeight(QFont::Bold);
 		isBold = true;
 	}
+
 	sendText->setFocus();
 }
 
@@ -300,6 +292,7 @@ void ChatWidget::fontItalic()
 		sendText->setFontItalic(true);
 		isItali = true;
 	}
+
 	sendText->setFocus();
 }
 
@@ -314,9 +307,9 @@ void ChatWidget::fontUnderline()
 		sendText->setFontUnderline(true);
 		isUnderline = true;
 	}
+
 	sendText->setFocus();
 }
-
 
 void ChatWidget::fontColor()
 {
@@ -327,6 +320,7 @@ void ChatWidget::fontColor()
 		sendText->setTextColor(color);
 		oldColor = color;
 	}
+
 	sendText->setFocus();
 }
 
@@ -359,8 +353,7 @@ void ChatWidget::saveChatInfo()
 			QFile file(fileName);
 			if (!file.open(QFile::WriteOnly | QFile::Text)) {
 				QMessageBox::warning(this,tr("保存文件"),
-							tr("无法保存文件 %1:\n %2").arg(fileName)
-							.arg(file.errorString()));
+					tr("无法保存文件 %1:\n %2").arg(fileName).arg(file.errorString()));
 			}
 			QTextStream outFile(&file);
 			outFile << chatText->toPlainText();
@@ -376,9 +369,9 @@ void ChatWidget::clearChatInfo()
 void ChatWidget::sendSlot()
 {
 	if (sendText->toPlainText() == "") {
-		QMessageBox::information(NULL, tr("友情提醒"),
-					tr("你什么都没输入，发个毛线～～"), QMessageBox::Ok);
+		QMessageBox::information(NULL, tr("友情提醒"), tr("你什么都没输入，发个毛线～～"), QMessageBox::Ok);
 	} else {
 		sendMessage(Message);
 	}
 }
+
